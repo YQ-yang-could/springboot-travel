@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yang.travel.mapper.OrderMapper">
+    <resultMap id="orderlist" type="com.yang.travel.pojo.Orders">
+        <id column="id" property="id"/>
+        <result property="orderNum" column="orderNum"/>
+        <result property="orderDesc" column="orderDesc"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <result property="orderTime" column="orderTime"/>
+        <result property="peopleCount" column="pepoleCount"/>
+        <result property="payType" column="payType"/>
+        <association property="product" column="productId" javaType="com.yang.travel.pojo.Product">
+            <id property="id" column="productId"/>
+            <result property="productName" column="productName"/>
+            <result property="productPrice" column="productPrice"/>
+            <result property="cityName" column="cityName"/>
+            <result property="departureTime" column="depatureTime"/>
+            <result property="productDesc" column="productDesc"/>
+            <result property="productNum" column="productNum"/>
+            <result property="productStatus" column="productStatus"/>
+        </association>
+    </resultMap>
+    <select id="findAll" resultType="com.yang.travel.pojo.Orders" resultMap="orderlist">
+        select o.*,p.productName,p.productPrice from ssm_travel.orders o ,product p where o.productId=p.id
+    </select>
+    <select id="findById" resultType="com.yang.travel.pojo.Orders">
+        select * from ssm_travel.orders where id=#{orderId};
+    </select>
+</mapper>
